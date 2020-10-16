@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="icons8-google-web-search-24.png"/>
+</head>
+<body>
+  <textarea id="input"></textarea>
+  <div id="searchAndResultsDiv">
+    <div id="searchDiv">
+      <input type="text" id="searchInput"/>
+      <button onclick=parse()><img class="icon" src="icons8-search-24.png" width="16" height="16"/></button>
+    </div>
+    <div id="resultsDiv"></div>
+  </div>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script src="lib/require.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
