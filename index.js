@@ -73,8 +73,9 @@ function goToLine(line) {
 	lineMarker?.clear()
 	lineMarker = codeMirror.markText({line: line-2}, {line: line-1}, {className: 'markedLine'})
 	codeMirror.scrollIntoView({
-		line: line-1
-	})
+		line: line-1,
+		ch: 0
+	}, codeMirror.getScrollInfo().clientHeight / 2)
 }
 
 function visitJson(ctx) {
