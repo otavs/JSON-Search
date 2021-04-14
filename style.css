@@ -8,22 +8,37 @@ html, body {
 
 #input {
 	flex: 1;
+	border: 1px solid;
+	overflow: auto;
+	margin: 3px 0 0 0;
 }
 
-#searchAndResultsDiv {
+#left {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	margin: 4px;
+	max-width: 50%;
+	overflow: auto;
+}
+
+#right {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	margin: 4px;
+	max-width: 50%;
+	overflow: auto;
 }
 
 #searchDiv {
 	display: flex;
-	margin: 5px;
+	margin: 3px 2px 5px 0;
 }
 
 #searchInput {
 	flex: 1;
-	margin: 2px;
+	margin: 0 2px 2px 2px;
 }
 
 button {
@@ -32,9 +47,8 @@ button {
 
 #resultsDiv {
 	flex: 1;
-	margin: 4px;
-	padding: 4px;
-	overflow-y: scroll;
+	margin: 0 2px 2px 0;
+	padding: 0 2px 2px 2px;
 }
 
 #resultsDiv * {
@@ -43,13 +57,14 @@ button {
 
 .result {
 	border: 1px solid;
-	margin-bottom: 3px;
-	padding: 3px;
-	overflow-y: auto;
+	margin-bottom: 4px;
+	padding: 4px;
+	overflow: auto;
 }
 
-span:hover {
+#resultsDiv span:hover {
 	background-color: rgb(158, 250, 253);
+	cursor: pointer;
 }
 
 textarea {
@@ -57,3 +72,10 @@ textarea {
 	padding: 4px;
 }
 
+.cm-s-default {
+	height: 100% !important;
+}
+
+.markedLine {
+	background-color: aquamarine;
+}

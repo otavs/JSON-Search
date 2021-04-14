@@ -4,15 +4,16 @@ const JSONParser = require('parser/build/JSONParser')
 
 const rootName = 'root'
 
-const inputArea = document.querySelector('#input')
 const searchInput = document.querySelector('#searchInput')
 const resultsDiv = document.querySelector('#resultsDiv')
+const inputArea = document.querySelector('#input')
+const resultsLabel = document.querySelector('#resultsLabel')
 
 searchInput.addEventListener('keydown', e => {if(event.keyCode == 13) parse()})
 
-let nodes = []
+let nodes = [], lineMarker
 
-inputArea.value = 
+const mock = 
 `{
 	"id": "0001",
 	"type": "donut",
@@ -41,8 +42,15 @@ inputArea.value =
 }
 `
 
+const codeMirror = CodeMirror(inputArea, {
+	value: mock,
+	mode: 'application/ld+json',
+	lineNumbers: true,
+	styleSelectedText: true,
+})
+
 function parse() {
-	const input = inputArea.value
+	const input = codeMirror.getValue()
 	const chars = new antlr4.InputStream(input)
 	const lexer = new JSONLexer.JSONLexer(chars)
 	const tokens  = new antlr4.CommonTokenStream(lexer)
@@ -57,6 +65,15 @@ function parse() {
 		animation: false,
 		offset: [0, 9],
 		hideOnClick: false,
+	})
+	resultsLabel.innerHTML = 'Results'
+}
+
+function goToLine(line) {
+	lineMarker?.clear()
+	lineMarker = codeMirror.markText({line: line-2}, {line: line-1}, {className: 'markedLine'})
+	codeMirror.scrollIntoView({
+		line: line-1
 	})
 }
 
@@ -148,6 +165,7 @@ function createSpan(text, line) {
 	span.innerHTML = text
 	span.setAttribute('line', `Line ${line}`)
 	span.classList.add('showLine')
+	span.addEventListener('click', () => goToLine(line))
 	return span
 }
 
