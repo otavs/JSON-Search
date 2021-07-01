@@ -1,60 +1,54 @@
-// Generated from JSON.g4 by ANTLR 4.8
+// Generated from JSON.g4 by ANTLR 4.9.2
 // jshint ignore: start
-var antlr4 = require('antlr4/index');
+import antlr4 from 'antlr4';
 
 // This class defines a complete listener for a parse tree produced by JSONParser.
-function JSONListener() {
-	antlr4.tree.ParseTreeListener.call(this);
-	return this;
+export default class JSONListener extends antlr4.tree.ParseTreeListener {
+
+	// Enter a parse tree produced by JSONParser#json.
+	enterJson(ctx) {
+	}
+
+	// Exit a parse tree produced by JSONParser#json.
+	exitJson(ctx) {
+	}
+
+
+	// Enter a parse tree produced by JSONParser#obj.
+	enterObj(ctx) {
+	}
+
+	// Exit a parse tree produced by JSONParser#obj.
+	exitObj(ctx) {
+	}
+
+
+	// Enter a parse tree produced by JSONParser#pair.
+	enterPair(ctx) {
+	}
+
+	// Exit a parse tree produced by JSONParser#pair.
+	exitPair(ctx) {
+	}
+
+
+	// Enter a parse tree produced by JSONParser#arr.
+	enterArr(ctx) {
+	}
+
+	// Exit a parse tree produced by JSONParser#arr.
+	exitArr(ctx) {
+	}
+
+
+	// Enter a parse tree produced by JSONParser#value.
+	enterValue(ctx) {
+	}
+
+	// Exit a parse tree produced by JSONParser#value.
+	exitValue(ctx) {
+	}
+
+
+
 }
-
-JSONListener.prototype = Object.create(antlr4.tree.ParseTreeListener.prototype);
-JSONListener.prototype.constructor = JSONListener;
-
-// Enter a parse tree produced by JSONParser#json.
-JSONListener.prototype.enterJson = function(ctx) {
-};
-
-// Exit a parse tree produced by JSONParser#json.
-JSONListener.prototype.exitJson = function(ctx) {
-};
-
-
-// Enter a parse tree produced by JSONParser#obj.
-JSONListener.prototype.enterObj = function(ctx) {
-};
-
-// Exit a parse tree produced by JSONParser#obj.
-JSONListener.prototype.exitObj = function(ctx) {
-};
-
-
-// Enter a parse tree produced by JSONParser#pair.
-JSONListener.prototype.enterPair = function(ctx) {
-};
-
-// Exit a parse tree produced by JSONParser#pair.
-JSONListener.prototype.exitPair = function(ctx) {
-};
-
-
-// Enter a parse tree produced by JSONParser#arr.
-JSONListener.prototype.enterArr = function(ctx) {
-};
-
-// Exit a parse tree produced by JSONParser#arr.
-JSONListener.prototype.exitArr = function(ctx) {
-};
-
-
-// Enter a parse tree produced by JSONParser#value.
-JSONListener.prototype.enterValue = function(ctx) {
-};
-
-// Exit a parse tree produced by JSONParser#value.
-JSONListener.prototype.exitValue = function(ctx) {
-};
-
-
-
-exports.JSONListener = JSONListener;

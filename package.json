@@ -1,0 +1,36 @@
+{
+  "name": "react_webpack_devstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --mode development --hot",
+    "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deloy": "gh-pages -d dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.6",
+    "file-loader": "^6.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^4.5.2",
+    "style-loader": "^2.0.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "antlr4": "^4.9.2",
+    "codemirror": "^5.62.0",
+    "gh-pages": "^3.2.3",
+    "tippy.js": "^6.3.1"
+  }
+}

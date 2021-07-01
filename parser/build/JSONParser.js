@@ -1,13 +1,11 @@
-// Generated from JSON.g4 by ANTLR 4.8
+// Generated from JSON.g4 by ANTLR 4.9.2
 // jshint ignore: start
-var antlr4 = require('antlr4/index');
-var JSONListener = require('./JSONListener').JSONListener;
-var grammarFileName = "JSON.g4";
+import antlr4 from 'antlr4';
+import JSONListener from './JSONListener.js';
 
-
-var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u000e:\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
-    "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0003\u0002\u0003\u0002",
+const serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786",
+    "\u5964\u0003\u000e:\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004",
+    "\t\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0003\u0002\u0003\u0002",
     "\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0003\u0007\u0003\u0013\n",
     "\u0003\f\u0003\u000e\u0003\u0016\u000b\u0003\u0003\u0003\u0003\u0003",
     "\u0003\u0003\u0003\u0003\u0005\u0003\u001c\n\u0003\u0003\u0004\u0003",
@@ -44,37 +42,258 @@ var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
     "\u0002\u00028\u000b\u0003\u0002\u0002\u0002\u0007\u0014\u001b\'.7"].join("");
 
 
-var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
+const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
 
-var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new antlr4.dfa.DFA(ds, index); });
+const decisionsToDFA = atn.decisionToState.map( (ds, index) => new antlr4.dfa.DFA(ds, index) );
 
-var sharedContextCache = new antlr4.PredictionContextCache();
+const sharedContextCache = new antlr4.PredictionContextCache();
 
-var literalNames = [ null, "'{'", "','", "'}'", "':'", "'['", "']'", "'true'", 
-                     "'false'", "'null'" ];
+export default class JSONParser extends antlr4.Parser {
 
-var symbolicNames = [ null, null, null, null, null, null, null, null, null, 
-                      null, "STRING", "NUMBER", "WS" ];
+    static grammarFileName = "JSON.g4";
+    static literalNames = [ null, "'{'", "','", "'}'", "':'", "'['", "']'", 
+                            "'true'", "'false'", "'null'" ];
+    static symbolicNames = [ null, null, null, null, null, null, null, null, 
+                             null, null, "STRING", "NUMBER", "WS" ];
+    static ruleNames = [ "json", "obj", "pair", "arr", "value" ];
 
-var ruleNames =  [ "json", "obj", "pair", "arr", "value" ];
+    constructor(input) {
+        super(input);
+        this._interp = new antlr4.atn.ParserATNSimulator(this, atn, decisionsToDFA, sharedContextCache);
+        this.ruleNames = JSONParser.ruleNames;
+        this.literalNames = JSONParser.literalNames;
+        this.symbolicNames = JSONParser.symbolicNames;
+    }
 
-function JSONParser (input) {
-	antlr4.Parser.call(this, input);
-    this._interp = new antlr4.atn.ParserATNSimulator(this, atn, decisionsToDFA, sharedContextCache);
-    this.ruleNames = ruleNames;
-    this.literalNames = literalNames;
-    this.symbolicNames = symbolicNames;
-    return this;
-}
+    get atn() {
+        return atn;
+    }
 
-JSONParser.prototype = Object.create(antlr4.Parser.prototype);
-JSONParser.prototype.constructor = JSONParser;
 
-Object.defineProperty(JSONParser.prototype, "atn", {
-	get : function() {
-		return atn;
+
+	json() {
+	    let localctx = new JsonContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 0, JSONParser.RULE_json);
+	    try {
+	        this.enterOuterAlt(localctx, 1);
+	        this.state = 10;
+	        this.value();
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
 	}
-});
+
+
+
+	obj() {
+	    let localctx = new ObjContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 2, JSONParser.RULE_obj);
+	    var _la = 0; // Token type
+	    try {
+	        this.state = 25;
+	        this._errHandler.sync(this);
+	        var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
+	        switch(la_) {
+	        case 1:
+	            this.enterOuterAlt(localctx, 1);
+	            this.state = 12;
+	            this.match(JSONParser.T__0);
+	            this.state = 13;
+	            this.pair();
+	            this.state = 18;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
+	            while(_la===JSONParser.T__1) {
+	                this.state = 14;
+	                this.match(JSONParser.T__1);
+	                this.state = 15;
+	                this.pair();
+	                this.state = 20;
+	                this._errHandler.sync(this);
+	                _la = this._input.LA(1);
+	            }
+	            this.state = 21;
+	            this.match(JSONParser.T__2);
+	            break;
+
+	        case 2:
+	            this.enterOuterAlt(localctx, 2);
+	            this.state = 23;
+	            this.match(JSONParser.T__0);
+	            this.state = 24;
+	            this.match(JSONParser.T__2);
+	            break;
+
+	        }
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+
+	pair() {
+	    let localctx = new PairContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 4, JSONParser.RULE_pair);
+	    try {
+	        this.enterOuterAlt(localctx, 1);
+	        this.state = 27;
+	        this.match(JSONParser.STRING);
+	        this.state = 28;
+	        this.match(JSONParser.T__3);
+	        this.state = 29;
+	        this.value();
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+
+	arr() {
+	    let localctx = new ArrContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 6, JSONParser.RULE_arr);
+	    var _la = 0; // Token type
+	    try {
+	        this.state = 44;
+	        this._errHandler.sync(this);
+	        var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
+	        switch(la_) {
+	        case 1:
+	            this.enterOuterAlt(localctx, 1);
+	            this.state = 31;
+	            this.match(JSONParser.T__4);
+	            this.state = 32;
+	            this.value();
+	            this.state = 37;
+	            this._errHandler.sync(this);
+	            _la = this._input.LA(1);
+	            while(_la===JSONParser.T__1) {
+	                this.state = 33;
+	                this.match(JSONParser.T__1);
+	                this.state = 34;
+	                this.value();
+	                this.state = 39;
+	                this._errHandler.sync(this);
+	                _la = this._input.LA(1);
+	            }
+	            this.state = 40;
+	            this.match(JSONParser.T__5);
+	            break;
+
+	        case 2:
+	            this.enterOuterAlt(localctx, 2);
+	            this.state = 42;
+	            this.match(JSONParser.T__4);
+	            this.state = 43;
+	            this.match(JSONParser.T__5);
+	            break;
+
+	        }
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+
+	value() {
+	    let localctx = new ValueContext(this, this._ctx, this.state);
+	    this.enterRule(localctx, 8, JSONParser.RULE_value);
+	    try {
+	        this.state = 53;
+	        this._errHandler.sync(this);
+	        switch(this._input.LA(1)) {
+	        case JSONParser.STRING:
+	            this.enterOuterAlt(localctx, 1);
+	            this.state = 46;
+	            this.match(JSONParser.STRING);
+	            break;
+	        case JSONParser.NUMBER:
+	            this.enterOuterAlt(localctx, 2);
+	            this.state = 47;
+	            this.match(JSONParser.NUMBER);
+	            break;
+	        case JSONParser.T__0:
+	            this.enterOuterAlt(localctx, 3);
+	            this.state = 48;
+	            this.obj();
+	            break;
+	        case JSONParser.T__4:
+	            this.enterOuterAlt(localctx, 4);
+	            this.state = 49;
+	            this.arr();
+	            break;
+	        case JSONParser.T__6:
+	            this.enterOuterAlt(localctx, 5);
+	            this.state = 50;
+	            this.match(JSONParser.T__6);
+	            break;
+	        case JSONParser.T__7:
+	            this.enterOuterAlt(localctx, 6);
+	            this.state = 51;
+	            this.match(JSONParser.T__7);
+	            break;
+	        case JSONParser.T__8:
+	            this.enterOuterAlt(localctx, 7);
+	            this.state = 52;
+	            this.match(JSONParser.T__8);
+	            break;
+	        default:
+	            throw new antlr4.error.NoViableAltException(this);
+	        }
+	    } catch (re) {
+	    	if(re instanceof antlr4.error.RecognitionException) {
+		        localctx.exception = re;
+		        this._errHandler.reportError(this, re);
+		        this._errHandler.recover(this, re);
+		    } else {
+		    	throw re;
+		    }
+	    } finally {
+	        this.exitRule();
+	    }
+	    return localctx;
+	}
+
+
+}
 
 JSONParser.EOF = antlr4.Token.EOF;
 JSONParser.T__0 = 1;
@@ -96,443 +315,214 @@ JSONParser.RULE_pair = 2;
 JSONParser.RULE_arr = 3;
 JSONParser.RULE_value = 4;
 
+class JsonContext extends antlr4.ParserRuleContext {
 
-function JsonContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = JSONParser.RULE_json;
-    return this;
-}
-
-JsonContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-JsonContext.prototype.constructor = JsonContext;
-
-JsonContext.prototype.value = function() {
-    return this.getTypedRuleContext(ValueContext,0);
-};
-
-JsonContext.prototype.enterRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.enterJson(this);
-	}
-};
-
-JsonContext.prototype.exitRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.exitJson(this);
-	}
-};
-
-
-
-
-JSONParser.JsonContext = JsonContext;
-
-JSONParser.prototype.json = function() {
-
-    var localctx = new JsonContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 0, JSONParser.RULE_json);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 10;
-        this.value();
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function ObjContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = JSONParser.RULE_obj;
-    return this;
-}
-
-ObjContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ObjContext.prototype.constructor = ObjContext;
-
-ObjContext.prototype.pair = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(PairContext);
-    } else {
-        return this.getTypedRuleContext(PairContext,i);
-    }
-};
-
-ObjContext.prototype.enterRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.enterObj(this);
-	}
-};
-
-ObjContext.prototype.exitRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.exitObj(this);
-	}
-};
-
-
-
-
-JSONParser.ObjContext = ObjContext;
-
-JSONParser.prototype.obj = function() {
-
-    var localctx = new ObjContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 2, JSONParser.RULE_obj);
-    var _la = 0; // Token type
-    try {
-        this.state = 25;
-        this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,1,this._ctx);
-        switch(la_) {
-        case 1:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 12;
-            this.match(JSONParser.T__0);
-            this.state = 13;
-            this.pair();
-            this.state = 18;
-            this._errHandler.sync(this);
-            _la = this._input.LA(1);
-            while(_la===JSONParser.T__1) {
-                this.state = 14;
-                this.match(JSONParser.T__1);
-                this.state = 15;
-                this.pair();
-                this.state = 20;
-                this._errHandler.sync(this);
-                _la = this._input.LA(1);
-            }
-            this.state = 21;
-            this.match(JSONParser.T__2);
-            break;
-
-        case 2:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 23;
-            this.match(JSONParser.T__0);
-            this.state = 24;
-            this.match(JSONParser.T__2);
-            break;
-
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
         }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function PairContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = JSONParser.RULE_pair;
-    return this;
-}
-
-PairContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-PairContext.prototype.constructor = PairContext;
-
-PairContext.prototype.STRING = function() {
-    return this.getToken(JSONParser.STRING, 0);
-};
-
-PairContext.prototype.value = function() {
-    return this.getTypedRuleContext(ValueContext,0);
-};
-
-PairContext.prototype.enterRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.enterPair(this);
-	}
-};
-
-PairContext.prototype.exitRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.exitPair(this);
-	}
-};
-
-
-
-
-JSONParser.PairContext = PairContext;
-
-JSONParser.prototype.pair = function() {
-
-    var localctx = new PairContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 4, JSONParser.RULE_pair);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 27;
-        this.match(JSONParser.STRING);
-        this.state = 28;
-        this.match(JSONParser.T__3);
-        this.state = 29;
-        this.value();
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function ArrContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = JSONParser.RULE_arr;
-    return this;
-}
-
-ArrContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ArrContext.prototype.constructor = ArrContext;
-
-ArrContext.prototype.value = function(i) {
-    if(i===undefined) {
-        i = null;
-    }
-    if(i===null) {
-        return this.getTypedRuleContexts(ValueContext);
-    } else {
-        return this.getTypedRuleContext(ValueContext,i);
-    }
-};
-
-ArrContext.prototype.enterRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.enterArr(this);
-	}
-};
-
-ArrContext.prototype.exitRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.exitArr(this);
-	}
-};
-
-
-
-
-JSONParser.ArrContext = ArrContext;
-
-JSONParser.prototype.arr = function() {
-
-    var localctx = new ArrContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, JSONParser.RULE_arr);
-    var _la = 0; // Token type
-    try {
-        this.state = 44;
-        this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,3,this._ctx);
-        switch(la_) {
-        case 1:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 31;
-            this.match(JSONParser.T__4);
-            this.state = 32;
-            this.value();
-            this.state = 37;
-            this._errHandler.sync(this);
-            _la = this._input.LA(1);
-            while(_la===JSONParser.T__1) {
-                this.state = 33;
-                this.match(JSONParser.T__1);
-                this.state = 34;
-                this.value();
-                this.state = 39;
-                this._errHandler.sync(this);
-                _la = this._input.LA(1);
-            }
-            this.state = 40;
-            this.match(JSONParser.T__5);
-            break;
-
-        case 2:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 42;
-            this.match(JSONParser.T__4);
-            this.state = 43;
-            this.match(JSONParser.T__5);
-            break;
-
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
         }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = JSONParser.RULE_json;
     }
-    return localctx;
-};
+
+	value() {
+	    return this.getTypedRuleContext(ValueContext,0);
+	};
+
+	enterRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.enterJson(this);
+		}
+	}
+
+	exitRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.exitJson(this);
+		}
+	}
 
 
-function ValueContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = JSONParser.RULE_value;
-    return this;
 }
 
-ValueContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-ValueContext.prototype.constructor = ValueContext;
-
-ValueContext.prototype.STRING = function() {
-    return this.getToken(JSONParser.STRING, 0);
-};
-
-ValueContext.prototype.NUMBER = function() {
-    return this.getToken(JSONParser.NUMBER, 0);
-};
-
-ValueContext.prototype.obj = function() {
-    return this.getTypedRuleContext(ObjContext,0);
-};
-
-ValueContext.prototype.arr = function() {
-    return this.getTypedRuleContext(ArrContext,0);
-};
-
-ValueContext.prototype.enterRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.enterValue(this);
-	}
-};
-
-ValueContext.prototype.exitRule = function(listener) {
-    if(listener instanceof JSONListener ) {
-        listener.exitValue(this);
-	}
-};
 
 
+class ObjContext extends antlr4.ParserRuleContext {
 
-
-JSONParser.ValueContext = ValueContext;
-
-JSONParser.prototype.value = function() {
-
-    var localctx = new ValueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 8, JSONParser.RULE_value);
-    try {
-        this.state = 53;
-        this._errHandler.sync(this);
-        switch(this._input.LA(1)) {
-        case JSONParser.STRING:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 46;
-            this.match(JSONParser.STRING);
-            break;
-        case JSONParser.NUMBER:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 47;
-            this.match(JSONParser.NUMBER);
-            break;
-        case JSONParser.T__0:
-            this.enterOuterAlt(localctx, 3);
-            this.state = 48;
-            this.obj();
-            break;
-        case JSONParser.T__4:
-            this.enterOuterAlt(localctx, 4);
-            this.state = 49;
-            this.arr();
-            break;
-        case JSONParser.T__6:
-            this.enterOuterAlt(localctx, 5);
-            this.state = 50;
-            this.match(JSONParser.T__6);
-            break;
-        case JSONParser.T__7:
-            this.enterOuterAlt(localctx, 6);
-            this.state = 51;
-            this.match(JSONParser.T__7);
-            break;
-        case JSONParser.T__8:
-            this.enterOuterAlt(localctx, 7);
-            this.state = 52;
-            this.match(JSONParser.T__8);
-            break;
-        default:
-            throw new antlr4.error.NoViableAltException(this);
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
         }
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = JSONParser.RULE_obj;
     }
-    return localctx;
-};
+
+	pair = function(i) {
+	    if(i===undefined) {
+	        i = null;
+	    }
+	    if(i===null) {
+	        return this.getTypedRuleContexts(PairContext);
+	    } else {
+	        return this.getTypedRuleContext(PairContext,i);
+	    }
+	};
+
+	enterRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.enterObj(this);
+		}
+	}
+
+	exitRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.exitObj(this);
+		}
+	}
 
 
-exports.JSONParser = JSONParser;
+}
+
+
+
+class PairContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = JSONParser.RULE_pair;
+    }
+
+	STRING() {
+	    return this.getToken(JSONParser.STRING, 0);
+	};
+
+	value() {
+	    return this.getTypedRuleContext(ValueContext,0);
+	};
+
+	enterRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.enterPair(this);
+		}
+	}
+
+	exitRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.exitPair(this);
+		}
+	}
+
+
+}
+
+
+
+class ArrContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = JSONParser.RULE_arr;
+    }
+
+	value = function(i) {
+	    if(i===undefined) {
+	        i = null;
+	    }
+	    if(i===null) {
+	        return this.getTypedRuleContexts(ValueContext);
+	    } else {
+	        return this.getTypedRuleContext(ValueContext,i);
+	    }
+	};
+
+	enterRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.enterArr(this);
+		}
+	}
+
+	exitRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.exitArr(this);
+		}
+	}
+
+
+}
+
+
+
+class ValueContext extends antlr4.ParserRuleContext {
+
+    constructor(parser, parent, invokingState) {
+        if(parent===undefined) {
+            parent = null;
+        }
+        if(invokingState===undefined || invokingState===null) {
+            invokingState = -1;
+        }
+        super(parent, invokingState);
+        this.parser = parser;
+        this.ruleIndex = JSONParser.RULE_value;
+    }
+
+	STRING() {
+	    return this.getToken(JSONParser.STRING, 0);
+	};
+
+	NUMBER() {
+	    return this.getToken(JSONParser.NUMBER, 0);
+	};
+
+	obj() {
+	    return this.getTypedRuleContext(ObjContext,0);
+	};
+
+	arr() {
+	    return this.getTypedRuleContext(ArrContext,0);
+	};
+
+	enterRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.enterValue(this);
+		}
+	}
+
+	exitRule(listener) {
+	    if(listener instanceof JSONListener ) {
+	        listener.exitValue(this);
+		}
+	}
+
+
+}
+
+
+
+
+JSONParser.JsonContext = JsonContext; 
+JSONParser.ObjContext = ObjContext; 
+JSONParser.PairContext = PairContext; 
+JSONParser.ArrContext = ArrContext; 
+JSONParser.ValueContext = ValueContext; 

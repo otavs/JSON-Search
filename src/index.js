@@ -1,6 +1,16 @@
-const antlr4 = require('antlr4/index')
-const JSONLexer = require('parser/build/JSONLexer')
-const JSONParser = require('parser/build/JSONParser')
+import './style.css'
+
+import antlr4 from 'antlr4'
+import JSONLexer from '../parser/build/JSONLexer'
+import JSONParser from '../parser/build/JSONParser'
+
+import CodeMirror from 'codemirror'
+import 'codemirror/addon/selection/mark-selection'
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/lib/codemirror.css'
+
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
 
 const rootName = 'root'
 
@@ -9,41 +19,16 @@ const resultsDiv = document.querySelector('#resultsDiv')
 const inputArea = document.querySelector('#input')
 const resultsLabel = document.querySelector('#resultsLabel')
 
-searchInput.addEventListener('keydown', e => {if(event.keyCode == 13) parse()})
+searchInput.addEventListener('keydown', e => e.keyCode == 13 && parse())
+
+document.querySelector('#searchButton').addEventListener('click', parse)
 
 let nodes = [], lineMarker
 
-const mock = 
-`{
-	"id": "0001",
-	"type": "donut",
-	"name": "Cake",
-	"ppu": 0.55,
-	"batters":
-		{
-			"batter":
-				[
-					{ "id": "1001", "type": "Regular" },
-					{ "id": "1002", "type": "Chocolate" },
-					{ "id": "1003", "type": "Blueberry" },
-					{ "id": "1004", "type": "Devil's Food" }
-				]
-		},
-	"topping":
-		[
-			{ "id": "5001", "type": "None" },
-			{ "id": "5002", "type": "Glazed" },
-			{ "id": "5005", "type": "Sugar" },
-			{ "id": "5007", "type": "Powdered Sugar" },
-			{ "id": "5006", "type": "Chocolate with Sprinkles" },
-			{ "id": "5003", "type": "Chocolate" },
-			{ "id": "5004", "type": "Maple" }
-		]
-}
-`
+import exampleJson from './example'
 
 const codeMirror = CodeMirror(inputArea, {
-	value: mock,
+	value: exampleJson,
 	mode: 'application/ld+json',
 	lineNumbers: true,
 	styleSelectedText: true,
@@ -52,9 +37,9 @@ const codeMirror = CodeMirror(inputArea, {
 function parse() {
 	const input = codeMirror.getValue()
 	const chars = new antlr4.InputStream(input)
-	const lexer = new JSONLexer.JSONLexer(chars)
+	const lexer = new JSONLexer(chars)
 	const tokens  = new antlr4.CommonTokenStream(lexer)
-	const parser = new JSONParser.JSONParser(tokens)
+	const parser = new JSONParser(tokens)
 	parser.buildParseTrees = true
 	const json = parser.json()
 	visitJson(json)
