@@ -113,15 +113,17 @@ function getPathOfNode(node) {
 }
 
 function getTextsAndLines(node) {
-	let res = [[node.text, node.line]]
-	while(node.parent) {
-		if(node.isTerminal) res.push([': '])
-		else res.push(['.'])
+	const res = []
+	while(node) {
+		res.push([node.text, node.line])
+		if(node.parent) {
+			if(node.isTerminal) res.push([': '])
+			else res.push(['.'])
+		}
 		if(node.arrayIndex.length) {
-			for(const {index, line} of node.arrayIndex)
+			for(const {index, line} of node.arrayIndex.reverse())
 				res.push([`[${index}]`, line])
 		}
-		res.push([node.parent.text, node.parent.line])
 		node = node.parent
 	}
 	return res.reverse()
