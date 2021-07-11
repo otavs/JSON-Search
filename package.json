@@ -8,7 +8,7 @@
     "start": "webpack serve --mode development --hot",
     "build": "webpack --mode production",
     "predeploy": "npm run build",
-    "deloy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
