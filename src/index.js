@@ -65,7 +65,7 @@ function goToLine(line) {
 
 function visitJson(ctx) {
 	nodes = []
-	visitValue(ctx.children[0], createNode(rootName, 1))
+	visitValue(ctx.value(), createNode(rootName, ctx.start.line))
 }
 
 function visitValue(ctx, parent, arrayIndex = []) {
