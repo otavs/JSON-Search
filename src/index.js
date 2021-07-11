@@ -68,7 +68,7 @@ function visitJson(ctx) {
 	visitValue(ctx.children[0], createNode(rootName, 1))
 }
 
-function visitValue(ctx, parent, arrayIndex = '') {
+function visitValue(ctx, parent, arrayIndex = []) {
 	if(ctx.obj())
 		visitObj(ctx.obj(), parent, arrayIndex)
 	else if(ctx.arr())
@@ -77,21 +77,22 @@ function visitValue(ctx, parent, arrayIndex = '') {
 		visitTerminal(ctx.children[0], parent, arrayIndex)
 }
 
-function visitObj(ctx, parent, arrayIndex = '') {
+function visitObj(ctx, parent, arrayIndex = []) {
 	for(const pair of ctx.pair())
-		visitValue(pair.value(), createNode(pair.STRING().getText().slice(1, -1), pair.start.line, parent, arrayIndex))
+		visitValue(pair.value(), createNode(pair.STRING().getText().slice(1, -1), pair.start.line, parent, arrayIndex, false))
 }
 
-function visitArr(ctx, parent, arrayIndex = '') {
-	for(const i in ctx.value())
-		visitValue(ctx.value()[i], parent, `${arrayIndex}[${i}]`)
+function visitArr(ctx, parent, arrayIndex = []) {
+	ctx.value().forEach((value, i) => {
+		visitValue(value, parent, [...arrayIndex, {index: i, line: value.start.line}])
+	})
 }
 
-function visitTerminal(ctx, parent, arrayIndex = '') {
+function visitTerminal(ctx, parent, arrayIndex = []) {
 	createNode(ctx.getText(), ctx.symbol.line, parent, arrayIndex, true)
 }
 
-function createNode(text, line, parent, arrayIndex = '', isTerminal) {
+function createNode(text, line, parent, arrayIndex = [], isTerminal) {
 	const node = {text, line, parent, arrayIndex, isTerminal}
 	nodes.push(node)
 	return node
@@ -104,7 +105,8 @@ function searchNodes(searchVal) {
 function getPathOfNode(node) {
 	let res = node.text
 	while(node.parent) {
-		res = `${node.parent.text}${node.arrayIndex}${node.isTerminal ? ': ' : '.'}${res}`
+		const indexListStr = node.arrayIndex.reduce((acc, {index}) => `${acc}[${index}]`, '')
+		res = `${node.parent.text}${indexListStr}${node.isTerminal ? ': ' : '.'}${res}`
 		node = node.parent
 	}
 	return res
@@ -115,11 +117,14 @@ function getTextsAndLines(node) {
 	while(node.parent) {
 		if(node.isTerminal) res.push([': '])
 		else res.push(['.'])
-		if(node.arrayIndex) res.push([node.arrayIndex])
+		if(node.arrayIndex.length) {
+			for(const {index, line} of node.arrayIndex)
+				res.push([`[${index}]`, line])
+		}
 		res.push([node.parent.text, node.parent.line])
 		node = node.parent
 	}
-	return res
+	return res.reverse()
 }
 
 function getPathOfNodes(nodes) {
@@ -134,7 +139,7 @@ function updateResults(nodes) {
 
 function createDiv(node) {
 	const div = document.createElement('div')
-	const textsAndLines = getTextsAndLines(node).reverse()
+	const textsAndLines = getTextsAndLines(node)
 	for(const [text, line] of textsAndLines)
 		if(line) div.appendChild(createSpan(text, line))
 		else div.appendChild(createText(text))
