@@ -9,6 +9,15 @@ import 'codemirror/addon/selection/mark-selection'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/lib/codemirror.css'
 
+import 'codemirror/addon/fold/brace-fold'
+import 'codemirror/addon/fold/comment-fold'
+import 'codemirror/addon/fold/foldcode'
+import 'codemirror/addon/fold/foldgutter.css'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/indent-fold'
+import 'codemirror/addon/fold/markdown-fold'
+import 'codemirror/addon/fold/xml-fold'
+
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 
@@ -20,8 +29,8 @@ const inputArea = document.querySelector('#input')
 const resultsLabel = document.querySelector('#resultsLabel')
 
 searchInput.addEventListener('keydown', e => e.keyCode == 13 && parse())
-
 document.querySelector('#searchButton').addEventListener('click', parse)
+document.querySelector('#beautifyButton').addEventListener('click', beautify)
 
 let nodes = [], lineMarker
 
@@ -31,11 +40,38 @@ const codeMirror = CodeMirror(inputArea, {
 	value: exampleJson,
 	mode: 'application/ld+json',
 	lineNumbers: true,
+	// lineWrapping: true,
 	styleSelectedText: true,
+	foldGutter: true,
+    gutters: [
+		'CodeMirror-linenumbers', 
+		'CodeMirror-foldgutter'
+	],
+	foldOptions: {
+		widget: (from, to) => {
+			// Get open / close token
+			let startToken = '{', endToken = '}'
+			const prevLine = codeMirror.getLine(from.line)
+			if (prevLine.lastIndexOf('[') > prevLine.lastIndexOf('{'))
+				startToken = '[', endToken = ']'
+			// Get json content
+			const internal = codeMirror.getRange(from, to)
+			const toParse = startToken + internal + endToken
+			// Get key count
+			let count
+			try {
+				const parsed = JSON.parse(toParse)
+				count = Object.keys(parsed).length
+			} catch(e) { }        
+			return count ? `\u21A4${count}\u21A6` : '\u2194'
+		}
+	}
 })
 
 function parse() {
 	const input = codeMirror.getValue()
+	if(!checkSyntax(input))
+		return
 	const chars = new antlr4.InputStream(input)
 	const lexer = new JSONLexer(chars)
 	const tokens  = new antlr4.CommonTokenStream(lexer)
@@ -162,3 +198,23 @@ function createSpan(text, line) {
 	return span
 }
 
+function checkSyntax(input) {
+	try {
+		JSON.parse(input)
+		return true
+	} catch (e) {
+		if(e instanceof SyntaxError)
+			alert('Syntax error in JSON')
+		return false
+	}
+}
+
+function beautify() {
+	try {
+		codeMirror.setValue(JSON.stringify(JSON.parse(codeMirror.getValue()), null, 4))
+	} catch (e) {
+		if(e instanceof SyntaxError)
+			alert('Syntax error in JSON')
+		throw e
+	}
+}

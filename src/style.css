@@ -79,3 +79,19 @@ textarea {
 .markedLine {
 	background-color: aquamarine;
 }
+
+#beautifyButton {
+	padding: 0 6px;
+	background-color: white;
+	border: 1px solid;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+#beautifyButton:hover {
+	background-color: rgb(162, 253, 249);
+}
+
+.CodeMirror-foldmarker {
+	font-size: .9em;
+}
